@@ -53,7 +53,8 @@ def dameLetra(letrasEnPantalla):
 
 #si es valida la palabra devuelve puntos sino resta.
 def procesar(letraPrincipal, letrasEnPantalla, candidata, diccionario):
-    return Puntos(candidata)
+        return Puntos(candidata)
+    
 
 #chequea que se use la letra principal, solo use letras de la pantalla y
 #exista en el diccionario
@@ -62,8 +63,18 @@ def esValida(letraPrincipal, letrasEnPantalla, candidata, diccionario):
 
 #devuelve los puntos
 def Puntos(candidata):
-    return(5)
+    if len(candidata) == 3:
+        return(1)
+    elif len(candidata) == 4:
+        return(2)
+    elif len(candidata) >= 5 and len(candidata) < 7:
+        return (len(candidata))
+    elif len(candidata) == 7:
+        return(10)
+    else:
+        return(-1)
+    
 
-#busca en el diccionario paralabras correctas y devuelve una lista de estas
+#busca en el diccionario palabras correctas y devuelve una lista de estas
 def dameAlgunasCorrectas(letraPrincipal, letrasEnPantalla, diccionario):
     return ['adanida', 'adrian', 'aduana', 'aduanar', 'adunar', 'adunia', 'adan', 'ahina', 'ana', 'anadina', 'anana', 'anda', 'andada', 'andadura', 'andana', 'andanada', 'andar', 'andarina', 'andarin', 'andriana', 'andrina', 'anidar', 'anidiar', 'anudadura', 'anudar', 'anuria', 'arana', 'arduran', 'arna', 'arnadi', 'arruinar', 'aran', 'aun', 'aunar', 'aina', 'aun', 'dan', 'dandi', 'diana', 'din', 'dina', 'dinar', 'dinarada', 'duna', 'durina', 'harina', 'hin', 'hindi', 'hindu', 'hirundinaria', 'hundir', 'inanidad', 'india', 'indiada', 'indiana', 'indinar', 'inri', 'inundar', 'irani', 'nada', 'nadadura', 'nadar', 'nadi', 'nadir', 'nahua', 'nana', 'narina', 'narra', 'narrar', 'narria', 'niara', 'nidada', 'nin', 'nudrir', 'nadir', 'nia', 'radian', 'rain', 'rana', 'randa', 'ranina', 'ranura', 'rin', 'rinran', 'ruana', 'ruin', 'ruina', 'ruinar', 'ruindad', 'runa', 'runrun', 'ruan', 'unidad', 'unir', 'urna']
