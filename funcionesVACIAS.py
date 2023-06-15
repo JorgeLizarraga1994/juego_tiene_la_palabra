@@ -7,9 +7,9 @@ import math
 #la función open necesita un close, al utilizar with el close queda explicito
 #agregamos el encoding, ya que teniamos un error de codificación de utf-8
 def lectura(diccionario):
-    with open("lemario.txt" , "r" , encoding = "ISO-8859-1") as lemario:
+    with open("lemario.txt" , "r" ,  encoding = "ISO-8859-1") as lemario: 
         palabras = lemario.read()
-        lista_palabras = palabras.split('\n')
+        lista_palabras = palabras.split("\n")
         diccionario.append(lista_palabras)
     return diccionario
 
@@ -53,27 +53,37 @@ def dameLetra(letrasEnPantalla):
 
 #si es valida la palabra devuelve puntos sino resta.
 def procesar(letraPrincipal, letrasEnPantalla, candidata, diccionario):
-        return Puntos(candidata)
+    if esValida(letraPrincipal , letrasEnPantalla, candidata ,diccionario):
+        return puntos(candidata)
+    return -1
     
+
 
 #chequea que se use la letra principal, solo use letras de la pantalla y
 #exista en el diccionario
 def esValida(letraPrincipal, letrasEnPantalla, candidata, diccionario):
-    return True
+    for letra in letrasEnPantalla:
+        if letra == letraPrincipal:
+            for palabra in diccionario:
+                if palabra == candidata:
+                    return True
+
+
 
 #devuelve los puntos
 def Puntos(candidata):
     if len(candidata) == 3:
-        return(1)
+        return 1
     elif len(candidata) == 4:
-        return(2)
+        return 2
     elif len(candidata) >= 5 and len(candidata) < 7:
         return (len(candidata))
     elif len(candidata) == 7:
-        return(10)
+        return 10
     else:
-        return(-1)
-    
+        return -1
+
+
 
 #busca en el diccionario palabras correctas y devuelve una lista de estas
 def dameAlgunasCorrectas(letraPrincipal, letrasEnPantalla, diccionario):
