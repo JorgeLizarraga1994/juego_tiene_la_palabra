@@ -32,8 +32,6 @@ def main():
 
         #lee el diccionario
         lectura(diccionario)
-        #test1
-        print(diccionario)
 
         #elige las 7 letras al azar y una de ellas como principal
         letrasEnPantalla = dame7Letras()
@@ -45,9 +43,7 @@ def main():
             letraPrincipal = dameLetra(letrasEnPantalla)
 
         print(dameAlgunasCorrectas(letraPrincipal, letrasEnPantalla, diccionario))
-        #test2
-        print(letrasEnPantalla)
-        print(letraPrincipal)
+        
 
         #dibuja la pantalla la primera vez
         dibujar(screen, letraPrincipal, letrasEnPantalla, candidata, puntos, segundos)
