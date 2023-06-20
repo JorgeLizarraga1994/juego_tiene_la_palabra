@@ -66,11 +66,15 @@ def esValida(letraPrincipal, letrasEnPantalla, candidata, diccionario):
         if letra == letraPrincipal:
             cont +=1
     
+    for char in candidata:
+        if char == letraPrincipal:
+            cont +=1     
+    
     for palabra in diccionario:
         if palabra == candidata:
             cont +=1
             
-    if cont == 2:
+    if cont == 3:
         return True         
         
 

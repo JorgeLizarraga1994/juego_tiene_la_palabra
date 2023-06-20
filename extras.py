@@ -62,7 +62,7 @@ def dameLetraApretada(key):
 
 def dibujar(screen, letraPrincipal, letrasEnPantalla, candidata, puntos, segundos):
 
-    defaultFont= pygame.font.Font( pygame.font.get_default_font(), 20)
+    defaultFont= pygame.font.Font( pygame.font.get_default_font(), 30)
     defaultFontGrande= pygame.font.Font( pygame.font.get_default_font(), 80)
 
     #Linea del piso
@@ -75,14 +75,14 @@ def dibujar(screen, letraPrincipal, letrasEnPantalla, candidata, puntos, segundo
     else:
         ren3 = defaultFont.render("Tiempo: " + str(int(segundos)), 1, COLOR_TEXTO)
     #escribe grande la palabra (letra por letra) y la letra principal de otro color
-    pos = 130
+    pos = 380 #posición en x de las letras
     for i in range(len(letrasEnPantalla)):
         if letrasEnPantalla[i] == letraPrincipal:
-            screen.blit(defaultFontGrande.render(letrasEnPantalla[i], 1, COLOR_TIEMPO_FINAL), (pos, 100))
+            screen.blit(defaultFontGrande.render(letrasEnPantalla[i], 1, COLOR_TIEMPO_FINAL), (pos, 130))
         else:
-            screen.blit(defaultFontGrande.render(letrasEnPantalla[i], 1, COLOR_LETRAS), (pos, 100))
+            screen.blit(defaultFontGrande.render(letrasEnPantalla[i], 1, COLOR_LETRAS), (pos, 130))
         pos = pos + TAMANNO_LETRA_GRANDE
 
-    screen.blit(ren1, (190, 570))
-    screen.blit(ren2, (680, 10))
+    screen.blit(ren1, (500, 670))
+    screen.blit(ren2, (1100, 10))
     screen.blit(ren3, (10, 10))
