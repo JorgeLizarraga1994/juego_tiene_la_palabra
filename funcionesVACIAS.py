@@ -12,13 +12,12 @@ def lectura(diccionario):
         diccionario.append(linea[0:-1])
     return diccionario
 
-#Devuelve una cadena de 7 caracteres sin repetir con 2 o 3 vocales y a lo sumo
-# con una consonante dificil (kxyz)
+
 def no_repite(letra, cadena):
     if letra not in cadena:
         return True
-#cambie el while por el for, ya que el for si encontraba una  repetida me
-#dejaba la cadena en 3 caracteres
+#Devuelve una cadena de 7 caracteres sin repetir con 2 o 3 vocales y a lo sumo
+# con una consonante dificil (kxyz)
 def dame7Letras():
     consonantes ="bcdfghjlmnpqrstvw"
     vocales = "aeiou"
@@ -51,9 +50,10 @@ def dameLetra(letrasEnPantalla):
         return letra
 
 #si es valida la palabra devuelve puntos sino resta.
-def procesar(letraPrincipal, letrasEnPantalla, candidata, diccionario):
-    if esValida(letraPrincipal , letrasEnPantalla, candidata ,diccionario):
-        return Puntos(candidata)
+def procesar(letraPrincipal, letrasEnPantalla, candidata, diccionario , palabrasAcertadas):
+    if no_repite(candidata , palabrasAcertadas):
+        if esValida(letraPrincipal , letrasEnPantalla, candidata ,diccionario):
+            return Puntos(candidata)
     return -1
 
 

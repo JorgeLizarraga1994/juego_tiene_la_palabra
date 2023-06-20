@@ -19,8 +19,8 @@ def main():
         sonidoCorrecto = pygame.mixer.Sound("correct-ding.mp3")
         sonidoError = pygame.mixer.Sound("Error.mp3")
         #musica
-        musica = pygame.mixer.Sound("Tema.mp3")
-        musica.play()
+        #musica = pygame.mixer.Sound("Tema.mp3")
+        #musica.play()
 
         
 
@@ -84,9 +84,10 @@ def main():
                     if e.key == K_BACKSPACE:
                         candidata = candidata[0:len(candidata)-1] #borra la ultima
                     if e.key == K_RETURN:  #presionó enter
-                        puntos += procesar(letraPrincipal, letrasEnPantalla, candidata, diccionario)
+                        puntos += procesar(letraPrincipal, letrasEnPantalla, candidata, diccionario , palabrasAcertadas)
+                        
                         #emitimos sonidos dependiendo el numero que nos de la función procesar
-                        if (procesar(letraPrincipal, letrasEnPantalla , candidata, diccionario) > 0):
+                        if (procesar(letraPrincipal, letrasEnPantalla , candidata, diccionario, palabrasAcertadas) > 0):
                             sonidoCorrecto.play()
                         else:
                             sonidoError.play()
@@ -94,6 +95,8 @@ def main():
                         if (esValida(letraPrincipal, letrasEnPantalla, candidata , diccionario) == True):
                             palabrasAcertadas.append(candidata) 
                             print(palabrasAcertadas)   
+                        
+                        
                                 
                         candidata = ""      
             segundos = TIEMPO_MAX - pygame.time.get_ticks()/1000
