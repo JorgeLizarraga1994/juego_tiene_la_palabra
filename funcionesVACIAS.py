@@ -55,7 +55,7 @@ def procesar(letraPrincipal, letrasEnPantalla, candidata, diccionario):
     if esValida(letraPrincipal , letrasEnPantalla, candidata ,diccionario):
         return Puntos(candidata)
     return -1
-    
+
 
 
 #chequea que se use la letra principal, solo use letras de la pantalla y
@@ -95,3 +95,5 @@ def dameAlgunasCorrectas(letraPrincipal, letrasEnPantalla, diccionario):
         if letraPrincipal in palabras:
             listaAlgunasCorrectas.append(palabras)
     return listaAlgunasCorrectas
+
+

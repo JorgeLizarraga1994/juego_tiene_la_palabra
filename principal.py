@@ -13,12 +13,22 @@ def main():
         #Centrar la ventana y despues inicializar pygame
         os.environ["SDL_VIDEO_CENTERED"] = "1"
         pygame.init()
-        #pygame.mixer.init()
+        pygame.mixer.init()
+
+        #sonidos
+        sonidoCorrecto = pygame.mixer.Sound("correct-ding.mp3")
+        sonidoError = pygame.mixer.Sound("Error.mp3")
+        #musica
+        musica = pygame.mixer.Sound("Tema.mp3")
+        musica.play()
+
+        
 
         #Preparar la ventana
         pygame.display.set_caption("Armar palabras con...")
         screen = pygame.display.set_mode((ANCHO, ALTO))
 
+        
         #tiempo total del juego
         gameClock = pygame.time.Clock()
         totaltime = 0
@@ -48,6 +58,8 @@ def main():
         #dibuja la pantalla la primera vez
         dibujar(screen, letraPrincipal, letrasEnPantalla, candidata, puntos, segundos)
 
+    
+
         while segundos > fps/1000:
         # 1 frame cada 1/fps segundos
             gameClock.tick(fps)
@@ -72,12 +84,18 @@ def main():
                         candidata = candidata[0:len(candidata)-1] #borra la ultima
                     if e.key == K_RETURN:  #presionó enter
                         puntos += procesar(letraPrincipal, letrasEnPantalla, candidata, diccionario)
-                        candidata = ""
+                        if (procesar(letraPrincipal, letrasEnPantalla , candidata, diccionario) > 0):
+                            sonidoCorrecto.play()
+                        else:
+                            sonidoError.play()
+                                
+                        candidata = ""      
 
             segundos = TIEMPO_MAX - pygame.time.get_ticks()/1000
 
-            #Limpiar pantalla anterior
-            screen.fill(COLOR_FONDO)
+            #Limpiar pantalla anterior (#Poner una imagen)
+            imagen=pygame.image.load("Jorge.png")
+            screen.blit(imagen,[0,0])
 
             #Dibujar de nuevo todo
             dibujar(screen, letraPrincipal, letrasEnPantalla, candidata, puntos, segundos)
@@ -90,6 +108,8 @@ def main():
                 if e.type == QUIT:
                     pygame.quit()
                     return
+                
+        
 
 #Programa Principal ejecuta Main
 if __name__ == "__main__":
