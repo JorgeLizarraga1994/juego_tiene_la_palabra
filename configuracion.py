@@ -7,7 +7,6 @@ TIEMPO_MAX = 200
 ANCHO = 1280
 ALTO = 720
 COLOR_LETRAS = (20,200,20)
-COLOR_FONDO = (0,0,0) # esto no se usa para poner el fondo de pantalla que elijamos
 COLOR_TEXTO = (200,200,200)
 COLOR_TIEMPO_FINAL = (200,20,10)
 

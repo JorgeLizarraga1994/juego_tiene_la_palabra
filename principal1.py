@@ -15,14 +15,12 @@ def main():
         pygame.init()
         pygame.mixer.init()
 
-        #fondo
-        imagen=pygame.image.load("assets/imagenes/fondo.jpg")
         #sonidos
         sonidoCorrecto = pygame.mixer.Sound("assets/sonidos/correct-ding.mp3")
         sonidoError = pygame.mixer.Sound("assets/sonidos/Error.mp3")
         #musica
-        musica = pygame.mixer.Sound("assets/sonidos/tema.mp3")
-        musica.play()
+        #musica = pygame.mixer.Sound("Tema.mp3")
+        #musica.play()
 
         
 
@@ -69,7 +67,7 @@ def main():
             totaltime += gameClock.get_time()
 
             if True:
-                fps = 3
+            	fps = 3
 
             #Buscar la tecla apretada del modulo de eventos de pygame
             for e in pygame.event.get():
@@ -100,6 +98,8 @@ def main():
                         candidata = ""      
             segundos = TIEMPO_MAX - pygame.time.get_ticks()/1000
 
+            #Limpiar pantalla anterior (#Poner una imagen)
+            imagen=pygame.image.load("assets/imagenes/espacio.jpg")
             screen.blit(imagen,[0,0])
 
             #Dibujar de nuevo todo
