@@ -52,7 +52,7 @@ def dameLetra(letrasEnPantalla):
 #si es valida la palabra devuelve puntos sino resta.
 def procesar(letraPrincipal, letrasEnPantalla, candidata, diccionario , palabrasAcertadas):
     if no_repite(candidata , palabrasAcertadas):
-        if esValida(letraPrincipal , letrasEnPantalla, candidata ,diccionario):
+        if esValida(letraPrincipal , letrasEnPantalla, candidata ,diccionario , palabrasAcertadas):
             return Puntos(candidata)
     return -1
 
@@ -60,7 +60,7 @@ def procesar(letraPrincipal, letrasEnPantalla, candidata, diccionario , palabras
 
 #chequea que se use la letra principal, solo use letras de la pantalla y
 #exista en el diccionario
-def esValida(letraPrincipal, letrasEnPantalla, candidata, diccionario):
+def esValida(letraPrincipal, letrasEnPantalla, candidata, diccionario , palabrasAcertadas):
     cont = 0
     for letra in letrasEnPantalla:
         if letra == letraPrincipal:
@@ -74,7 +74,10 @@ def esValida(letraPrincipal, letrasEnPantalla, candidata, diccionario):
         if palabra == candidata:
             cont +=1
             
-    if cont == 3:
+    if candidata not in palabrasAcertadas:        
+        cont += 1
+        
+    if cont == 4:
         return True         
         
 

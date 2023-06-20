@@ -92,7 +92,7 @@ def main():
                         else:
                             sonidoError.play()
                         #si la palabra ingresada es valida, la guardamos en palabrasAcertadas    
-                        if (esValida(letraPrincipal, letrasEnPantalla, candidata , diccionario) == True):
+                        if (esValida(letraPrincipal, letrasEnPantalla, candidata , diccionario , palabrasAcertadas) == True):
                             palabrasAcertadas.append(candidata) 
                             print(palabrasAcertadas)   
                         
