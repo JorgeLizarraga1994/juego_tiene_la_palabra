@@ -16,10 +16,10 @@ def main():
         pygame.mixer.init()
 
         #sonidos
-        sonidoCorrecto = pygame.mixer.Sound("correct-ding.mp3")
-        sonidoError = pygame.mixer.Sound("Error.mp3")
+        sonidoCorrecto = pygame.mixer.Sound("assets/sonidos/correct-ding.mp3")
+        sonidoError = pygame.mixer.Sound("assets/sonidos/Error.mp3")
         #musica
-        musica = pygame.mixer.Sound("Tema.mp3")
+        musica = pygame.mixer.Sound("assets/sonidos/Tema.mp3")
         musica.play()
 
         
@@ -95,14 +95,12 @@ def main():
                         if (esValida(letraPrincipal, letrasEnPantalla, candidata , diccionario , palabrasAcertadas) == True):
                             palabrasAcertadas.append(candidata) 
                             print(palabrasAcertadas)   
-                        
-                        
-                                
+                            
                         candidata = ""      
             segundos = TIEMPO_MAX - pygame.time.get_ticks()/1000
 
             #Limpiar pantalla anterior (#Poner una imagen)
-            imagen=pygame.image.load("fondo2.jpg")
+            imagen=pygame.image.load("assets/imagenes/fondo2.jpg")
             screen.blit(imagen,[0,0])
 
             #Dibujar de nuevo todo
