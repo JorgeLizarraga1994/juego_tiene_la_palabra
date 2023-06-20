@@ -99,7 +99,7 @@ def main():
             segundos = TIEMPO_MAX - pygame.time.get_ticks()/1000
 
             #Limpiar pantalla anterior (#Poner una imagen)
-            imagen=pygame.image.load("Jorge.png")
+            imagen=pygame.image.load("espacio.jpg")
             screen.blit(imagen,[0,0])
 
             #Dibujar de nuevo todo
