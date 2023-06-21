@@ -59,7 +59,7 @@ def main():
         
 
         #dibuja la pantalla la primera vez
-        dibujar(screen, letraPrincipal, letrasEnPantalla, candidata, puntos, segundos)
+        dibujar(screen, letraPrincipal, letrasEnPantalla, candidata, puntos, segundos, palabrasAcertadas)
 
     
 
@@ -103,7 +103,7 @@ def main():
             screen.blit(imagen,[0,0])
 
             #Dibujar de nuevo todo
-            dibujar(screen, letraPrincipal, letrasEnPantalla, candidata, puntos, segundos)
+            dibujar(screen, letraPrincipal, letrasEnPantalla, candidata, puntos, segundos, palabrasAcertadas)
 
             pygame.display.flip()
 
