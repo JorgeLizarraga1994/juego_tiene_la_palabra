@@ -21,8 +21,8 @@ def main():
         sonidoCorrecto = pygame.mixer.Sound("assets/sonidos/correct-ding.mp3")
         sonidoError = pygame.mixer.Sound("assets/sonidos/Error.mp3")
         #musica
-        #musica = pygame.mixer.Sound("assets/sonidos/tema.mp3")
-        #musica.play()
+        musica = pygame.mixer.Sound("assets/sonidos/musica.mp3")
+        musica.play()
 
         
 
