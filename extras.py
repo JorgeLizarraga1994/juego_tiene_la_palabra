@@ -65,8 +65,8 @@ def dibujar(screen, letraPrincipal, letrasEnPantalla, candidata, puntos, segundo
     defaultFont= pygame.font.Font( pygame.font.get_default_font(), 30)
     defaultFontGrande= pygame.font.Font( pygame.font.get_default_font(), 80)
 
-    posXacertadas = 50
-    posYacertadas= 50
+    posXacertadas = 10
+    posYacertadas= 120
     
     #Linea del piso
     pygame.draw.line(screen, (255,255,255), (0, ALTO-70) , (ANCHO, ALTO-70), 5)
@@ -78,7 +78,7 @@ def dibujar(screen, letraPrincipal, letrasEnPantalla, candidata, puntos, segundo
         for i in palabrasAcertadas:
             ren5 = defaultFont.render(i, 1, COLOR_TEXTO)
             screen.blit(ren5 , (posXacertadas,posYacertadas))
-            posYacertadas += 20
+            posYacertadas += 40
         
     if(segundos<15):
         ren3 = defaultFont.render("Tiempo: " + str(int(segundos)), 1, COLOR_TIEMPO_FINAL)
@@ -92,11 +92,10 @@ def dibujar(screen, letraPrincipal, letrasEnPantalla, candidata, puntos, segundo
         else:
             screen.blit(defaultFontGrande.render(letrasEnPantalla[i], 1, COLOR_LETRAS), (pos, 130))
         pos = pos + TAMANNO_LETRA_GRANDE
-    #for i in palabrasAcertadas:
-     #   ren4 = defaultFont.render(i, True, COLOR_TEXTO)    
+
         
     screen.blit(ren1, (500, 670))
     screen.blit(ren2, (1100, 10))
     screen.blit(ren3, (10, 10))
-    screen.blit(ren4, (posXacertadas , 30))
+    screen.blit(ren4, (posXacertadas , 80))
     

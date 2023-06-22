@@ -40,6 +40,7 @@ def dame7Letras():
     for letra_dificil in random.choice(c_dificil):
         if no_repite(letra_dificil , nueva):
             nueva = nueva + letra_dificil
+            
 
     return nueva
 
@@ -54,7 +55,7 @@ def procesar(letraPrincipal, letrasEnPantalla, candidata, diccionario , palabras
     if no_repite(candidata , palabrasAcertadas):
         if esValida(letraPrincipal , letrasEnPantalla, candidata ,diccionario , palabrasAcertadas):
             return Puntos(candidata)
-    return -1
+    return 0
 
 
 
