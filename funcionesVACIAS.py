@@ -56,6 +56,8 @@ def procesar(letraPrincipal, letrasEnPantalla, candidata, diccionario , palabras
     if no_repite(candidata , palabrasAcertadas):
         if esValida(letraPrincipal , letrasEnPantalla, candidata ,diccionario , palabrasAcertadas):
             return Puntos(candidata)
+        else:
+            return -1
     return 0
 
 
