@@ -7,10 +7,11 @@ import math
 #la función open necesita un close, al utilizar with el close queda explicito
 #agregamos el encoding, ya que teniamos un error de codificación de utf-8
 def lectura(diccionario):
-    archivo= open("lemario.txt","r" , encoding = "utf-8")
-    for linea in archivo.readlines():
-        diccionario.append(linea[0:-1])
-    return diccionario
+    with open('lemario.txt', 'r',  encoding='iso-8859-1') as archivo:
+        for linea in archivo.readlines():
+            diccionario.append(linea[0:-1])
+        return diccionario
+        
 
 
 def no_repite(letra, cadena):

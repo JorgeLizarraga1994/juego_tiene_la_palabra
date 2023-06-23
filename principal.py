@@ -7,7 +7,8 @@ from pygame.locals import *
 from configuracion import *
 from funcionesVACIAS import *
 from extras import *
-
+# Establecer la codificación en UTF-8
+sys.stdout.reconfigure(encoding='utf-8')
 #Funcion principal
 def main():
         #Centrar la ventana y despues inicializar pygame
@@ -21,11 +22,9 @@ def main():
         sonidoCorrecto = pygame.mixer.Sound("assets/sonidos/correct-ding.mp3")
         sonidoError = pygame.mixer.Sound("assets/sonidos/Error.mp3")
         #musica
-        musica = pygame.mixer.Sound("assets/sonidos/musica.mp3")
+        musica = pygame.mixer.Sound("assets/sonidos/musica2.mp3")
         musica.play()
-
         
-
         #Preparar la ventana
         pygame.display.set_caption("Armar palabras con...")
         screen = pygame.display.set_mode((ANCHO, ALTO))
@@ -42,7 +41,7 @@ def main():
         diccionario = []
         palabrasAcertadas = []
         
-
+        
         #lee el diccionario
         lectura(diccionario)
 
@@ -57,12 +56,13 @@ def main():
 
         print(dameAlgunasCorrectas(letraPrincipal, letrasEnPantalla, diccionario))
         
+        
 
         #dibuja la pantalla la primera vez
         dibujar(screen, letraPrincipal, letrasEnPantalla, candidata, puntos, segundos, palabrasAcertadas)
-
-    
-
+        
+        
+                
         while segundos > fps/1000:
         # 1 frame cada 1/fps segundos
             gameClock.tick(fps)
@@ -78,7 +78,7 @@ def main():
                 if e.type == QUIT:
                     pygame.quit()
                     return()
-
+    
                 #Ver si fue apretada alguna tecla
                 if e.type == KEYDOWN:
                     letra = dameLetraApretada(e.key)
@@ -97,8 +97,13 @@ def main():
                         if (esValida(letraPrincipal, letrasEnPantalla, candidata , diccionario, palabrasAcertadas) == True):
                             palabrasAcertadas.append(candidata) 
                             print(palabrasAcertadas)        
-                        candidata = ""      
+                        candidata = ""
+            
             segundos = TIEMPO_MAX - pygame.time.get_ticks()/1000
+            
+            
+            
+            
 
             screen.blit(imagen,[0,0])
 

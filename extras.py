@@ -55,19 +55,25 @@ def dameLetraApretada(key):
         return("y")
     elif key == K_z:
         return("z")
+    elif key == K_1:
+        return("1")
+    elif key == K_2:
+        return("2")
+    elif key == K_3:
+        return("3")
     elif key == K_SPACE:
-       return(" ")
+        return(" ")
     else:
         return("")
 
 def dibujar(screen, letraPrincipal, letrasEnPantalla, candidata, puntos, segundos , palabrasAcertadas):
-
+    
     defaultFont= pygame.font.Font( pygame.font.get_default_font(), 30)
     defaultFontGrande= pygame.font.Font( pygame.font.get_default_font(), 80)
 
     posXacertadas = 10
     posYacertadas= 120
-    
+        
     #Linea del piso
     pygame.draw.line(screen, (255,255,255), (0, ALTO-70) , (ANCHO, ALTO-70), 5)
 
@@ -79,11 +85,18 @@ def dibujar(screen, letraPrincipal, letrasEnPantalla, candidata, puntos, segundo
             ren5 = defaultFont.render(i, 1, COLOR_TEXTO)
             screen.blit(ren5 , (posXacertadas,posYacertadas))
             posYacertadas += 40
-        
+            
     if(segundos<15):
         ren3 = defaultFont.render("Tiempo: " + str(int(segundos)), 1, COLOR_TIEMPO_FINAL)
     else:
         ren3 = defaultFont.render("Tiempo: " + str(int(segundos)), 1, COLOR_TEXTO)
+        
+    if(segundos < 3):
+        palabrasAcertadas.sort()
+        for e in  palabrasAcertadas:
+            ren5 = defaultFont.render(e, 1, COLOR_TEXTO)
+            
+        
     #escribe grande la palabra (letra por letra) y la letra principal de otro color
     pos = 380 #posición en x de las letras
     for i in range(len(letrasEnPantalla)):
@@ -93,9 +106,9 @@ def dibujar(screen, letraPrincipal, letrasEnPantalla, candidata, puntos, segundo
             screen.blit(defaultFontGrande.render(letrasEnPantalla[i], 1, COLOR_LETRAS), (pos, 130))
         pos = pos + TAMANNO_LETRA_GRANDE
 
-        
+            
     screen.blit(ren1, (500, 670))
     screen.blit(ren2, (1100, 10))
     screen.blit(ren3, (10, 10))
     screen.blit(ren4, (posXacertadas , 80))
-    
+        
