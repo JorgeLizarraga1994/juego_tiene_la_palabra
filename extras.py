@@ -113,4 +113,4 @@ def dibujar(screen, letra_principal, letras_en_pantalla, candidata, puntos, segu
     screen.blit(ren2, (1100, 10))
     screen.blit(ren3, (10, 10))
     screen.blit(ren4, (pos_x_acertadas , 80))
-        
+    
