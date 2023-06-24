@@ -7,22 +7,23 @@ from pygame.locals import *
 from configuracion import *
 from funcionesVACIAS import *
 from extras import *
-# Establecer la codificación en UTF-8
-sys.stdout.reconfigure(encoding='utf-8')
+
 #Funcion principal
 def main():
+        # Establecer la codificación en UTF-8
+        sys.stdout.reconfigure(encoding='utf-8')
         #Centrar la ventana y despues inicializar pygame
         os.environ["SDL_VIDEO_CENTERED"] = "1"
         pygame.init()
         pygame.mixer.init()
 
         #fondo
-        imagen=pygame.image.load("assets/imagenes/espacio.jpg")
+        imagen = pygame.image.load("assets/imagenes/espacio.jpg")
         #sonidos
-        sonidoCorrecto = pygame.mixer.Sound("assets/sonidos/correct-ding.mp3")
-        sonidoError = pygame.mixer.Sound("assets/sonidos/Error.mp3")
+        sonido_correcto = pygame.mixer.Sound("assets/sonidos/correct-ding.mp3")
+        sonido_error = pygame.mixer.Sound("assets/sonidos/Error.mp3")
         #musica
-        musica = pygame.mixer.Sound("assets/sonidos/musica2.mp3")
+        musica = pygame.mixer.Sound("assets/sonidos/musica.mp3")
         musica.play()
         
         #Preparar la ventana
@@ -39,30 +40,26 @@ def main():
         puntos = 0
         candidata = ""
         diccionario = []
-        palabrasAcertadas = []
+        palabras_acertadas = []
         
         
         #lee el diccionario
         lectura(diccionario)
 
         #elige las 7 letras al azar y una de ellas como principal
-        letrasEnPantalla = dame7Letras()
-        letraPrincipal = dameLetra(letrasEnPantalla)
+        letras_en_pantalla = dame_7_letras()
+        letra_principal = dame_letra(letras_en_pantalla)
 
         #se queda con 7 letras que permitan armar muchas palabras, evita que el juego sea aburrido
-        while(len(dameAlgunasCorrectas(letraPrincipal, letrasEnPantalla, diccionario))< MINIMO):
-            letrasEnPantalla = dame7Letras()
-            letraPrincipal = dameLetra(letrasEnPantalla)
+        while(len(dame_algunas_correctas(letra_principal, letras_en_pantalla, diccionario, palabras_acertadas))< MINIMO):
+            letras_en_pantalla = dame_7_letras()
+            letra_principal = dame_letra(letras_en_pantalla)
 
-        print(dameAlgunasCorrectas(letraPrincipal, letrasEnPantalla, diccionario))
+        print(dame_algunas_correctas(letra_principal, letras_en_pantalla, diccionario, palabras_acertadas))
         
-        
-
         #dibuja la pantalla la primera vez
-        dibujar(screen, letraPrincipal, letrasEnPantalla, candidata, puntos, segundos, palabrasAcertadas)
+        dibujar(screen, letra_principal, letras_en_pantalla, candidata, puntos, segundos, palabras_acertadas)
         
-        
-                
         while segundos > fps/1000:
         # 1 frame cada 1/fps segundos
             gameClock.tick(fps)
@@ -81,34 +78,29 @@ def main():
     
                 #Ver si fue apretada alguna tecla
                 if e.type == KEYDOWN:
-                    letra = dameLetraApretada(e.key)
+                    letra = dame_letra_apretada(e.key)
                     candidata += letra   #va concatenando las letras que escribe
                     if e.key == K_BACKSPACE:
                         candidata = candidata[0:len(candidata)-1] #borra la ultima
                     if e.key == K_RETURN:  #presionó enter
-                        puntos += procesar(letraPrincipal, letrasEnPantalla, candidata, diccionario , palabrasAcertadas)
+                        puntos += procesar(letra_principal, letras_en_pantalla, candidata, diccionario , palabras_acertadas)
                         
-                        #emitimos sonidos dependiendo el numero que nos de la función procesar
-                        if (procesar(letraPrincipal, letrasEnPantalla , candidata, diccionario, palabrasAcertadas) > 0):
-                            sonidoCorrecto.play()
+                        #Verificamos el numero que retorna la función procesar y dependiendo de eso emitimos un sonido
+                        if (procesar(letra_principal, letras_en_pantalla , candidata, diccionario, palabras_acertadas) > 0):
+                            sonido_correcto.play()
                         else:
-                            sonidoError.play()
-                        #si la palabra ingresada es valida, la guardamos en palabrasAcertadas    
-                        if (esValida(letraPrincipal, letrasEnPantalla, candidata , diccionario, palabrasAcertadas) == True):
-                            palabrasAcertadas.append(candidata) 
-                            print(palabrasAcertadas)        
+                            sonido_error.play()
+                        #Verificamos si la palabra candidata es valida, si es valida la guardamos en la lista de palabras_acertadas   
+                        if (es_valida(letra_principal, letras_en_pantalla, candidata , diccionario, palabras_acertadas) == True):
+                            palabras_acertadas.append(candidata)        
                         candidata = ""
             
             segundos = TIEMPO_MAX - pygame.time.get_ticks()/1000
             
-            
-            
-            
-
             screen.blit(imagen,[0,0])
 
             #Dibujar de nuevo todo
-            dibujar(screen, letraPrincipal, letrasEnPantalla, candidata, puntos, segundos, palabrasAcertadas)
+            dibujar(screen, letra_principal, letras_en_pantalla, candidata, puntos, segundos, palabras_acertadas)
 
             pygame.display.flip()
 

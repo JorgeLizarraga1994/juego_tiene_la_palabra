@@ -2,7 +2,7 @@ import pygame
 from pygame.locals import *
 from configuracion import *
 
-def dameLetraApretada(key):
+def dame_letra_apretada(key):
     if key == K_a:
         return("a")
     elif key == K_b:
@@ -66,13 +66,13 @@ def dameLetraApretada(key):
     else:
         return("")
 
-def dibujar(screen, letraPrincipal, letrasEnPantalla, candidata, puntos, segundos , palabrasAcertadas):
+def dibujar(screen, letra_principal, letras_en_pantalla, candidata, puntos, segundos , palabras_acertadas):
     
     defaultFont= pygame.font.Font( pygame.font.get_default_font(), 30)
     defaultFontGrande= pygame.font.Font( pygame.font.get_default_font(), 80)
 
-    posXacertadas = 10
-    posYacertadas= 120
+    pos_x_acertadas = 10
+    pos_y_acertadas= 120
         
     #Linea del piso
     pygame.draw.line(screen, (255,255,255), (0, ALTO-70) , (ANCHO, ALTO-70), 5)
@@ -80,35 +80,37 @@ def dibujar(screen, letraPrincipal, letrasEnPantalla, candidata, puntos, segundo
     ren1 = defaultFont.render(candidata, 1, COLOR_TEXTO)
     ren2 = defaultFont.render("Puntos: " + str(puntos), 1, COLOR_TEXTO)
     ren4 = defaultFont.render("palabras acertadas: ", 1, COLOR_TEXTO)
-    if len(palabrasAcertadas) > 0:
-        for i in palabrasAcertadas:
-            ren5 = defaultFont.render(i, 1, COLOR_TEXTO)
-            screen.blit(ren5 , (posXacertadas,posYacertadas))
-            posYacertadas += 40
+    """Recorremos la lista de palabras_acertadas una por una y la vamos mostrando en
+    pantalla mientras que vamos moviendo la posición para que queden enlistadas
+    una debajo de la otra""" 
+    for i in palabras_acertadas:
+        ren5 = defaultFont.render(i, 1, COLOR_TEXTO)
+        screen.blit(ren5 , (pos_x_acertadas,pos_y_acertadas))
+        pos_y_acertadas += 40
             
     if(segundos<15):
         ren3 = defaultFont.render("Tiempo: " + str(int(segundos)), 1, COLOR_TIEMPO_FINAL)
     else:
         ren3 = defaultFont.render("Tiempo: " + str(int(segundos)), 1, COLOR_TEXTO)
-        
-    if(segundos < 3):
-        palabrasAcertadas.sort()
-        for e in  palabrasAcertadas:
+    """ Verificamos que el tiempo sea menor a 1, y mediante la función
+    .sort , ordenaremos alfabeticamente las palabras acertadas y las mostraremos en pantalla"""    
+    if(segundos < 1):
+        palabras_acertadas.sort()
+        for e in  palabras_acertadas:
             ren5 = defaultFont.render(e, 1, COLOR_TEXTO)
             
-        
     #escribe grande la palabra (letra por letra) y la letra principal de otro color
     pos = 380 #posición en x de las letras
-    for i in range(len(letrasEnPantalla)):
-        if letrasEnPantalla[i] == letraPrincipal:
-            screen.blit(defaultFontGrande.render(letrasEnPantalla[i], 1, COLOR_TIEMPO_FINAL), (pos, 130))
+    for i in range(len(letras_en_pantalla)):
+        if letras_en_pantalla[i] == letra_principal:
+            screen.blit(defaultFontGrande.render(letras_en_pantalla[i], 1, COLOR_TIEMPO_FINAL), (pos, 130))
         else:
-            screen.blit(defaultFontGrande.render(letrasEnPantalla[i], 1, COLOR_LETRAS), (pos, 130))
+            screen.blit(defaultFontGrande.render(letras_en_pantalla[i], 1, COLOR_LETRAS), (pos, 130))
         pos = pos + TAMANNO_LETRA_GRANDE
 
             
     screen.blit(ren1, (500, 670))
     screen.blit(ren2, (1100, 10))
     screen.blit(ren3, (10, 10))
-    screen.blit(ren4, (posXacertadas , 80))
+    screen.blit(ren4, (pos_x_acertadas , 80))
         
