@@ -82,14 +82,13 @@ def main():
         dibujar(screen, letra_principal, letras_en_pantalla, candidata, puntos, segundos, palabras_acertadas, seleccion_dificultad)
         
         
-
         while segundos > fps/1000:
+            if seleccion_dificultad == False:
+                pintar_botones(screen,facil,"Facil")
+                pintar_botones(screen,medio,"Medio")
+                pintar_botones(screen,dificil,"Dificil") 
             if True:
                 fps = 3000
-                
-            pintar_botones(screen,facil,"Facil")
-            pintar_botones(screen,medio,"Medio")
-            pintar_botones(screen,dificil,"Dificil")
             #Buscar la tecla apretada del modulo de eventos de pygame
             for e in pygame.event.get():
                 if e.type == MOUSEBUTTONDOWN and e.button==1:
@@ -108,31 +107,35 @@ def main():
                 #QUIT es apretar la X en la ventana
                 if e.type == QUIT:
                     pygame.quit()
-                    
-            if seleccion_dificultad == True:
-                # 1 frame cada 1/fps segundos
-                gameClock.tick(fps)
-                totaltime += gameClock.get_time()
-                screen.blit(imagen_fondo,[0,0])
-                segundos = TIEMPO_MAX - pygame.time.get_ticks()/1000
-                #Ver si fue apretada alguna tecla
-                if e.type == KEYDOWN:
-                    letra = dame_letra_apretada(e.key)
-                    candidata += letra   #va concatenando las letras que escribe
-                    if e.key == K_BACKSPACE:
-                        candidata = candidata[0:len(candidata)-1] #borra la ultima
-                    if e.key == K_RETURN:  #presionó enter
-                        puntos += procesar(letra_principal, letras_en_pantalla, candidata, diccionario , palabras_acertadas)
-                        
-                    #Verificamos el numero que retorna la función procesar y dependiendo de eso emitimos un sonido
-                    if (procesar(letra_principal, letras_en_pantalla , candidata, diccionario, palabras_acertadas) > 0):
-                        sonido_correcto.play()
-                    else:
-                        sonido_error.play()
-                    #Verificamos si la palabra candidata es valida, si es valida la guardamos en la lista de palabras_acertadas   
-                    if (es_valida(letra_principal, letras_en_pantalla, candidata , diccionario, palabras_acertadas) == True):
-                        palabras_acertadas.append(candidata)        
-                        candidata = ""
+                    return()
+                if seleccion_dificultad == True:
+                    # 1 frame cada 1/fps segundos
+                    gameClock.tick(fps)
+                    totaltime += gameClock.get_time()
+                    screen.blit(imagen_fondo,[0,0])
+                    segundos = TIEMPO_MAX - pygame.time.get_ticks()/1000
+                    #Ver si fue apretada alguna tecla
+                    if e.type == KEYDOWN:
+                        letra = dame_letra_apretada(e.key)
+                        candidata += letra   #va concatenando las letras que escribe
+                        if e.key == K_BACKSPACE:
+                            candidata = candidata[0:len(candidata)-1] #borra la ultima
+                        if e.key == K_RETURN:  #presionó enter
+                            puntos += procesar(letra_principal, letras_en_pantalla, candidata, diccionario , palabras_acertadas)
+                            
+                            #Verificamos el numero que retorna la función procesar y dependiendo de eso emitimos un sonido
+                            if (procesar(letra_principal, letras_en_pantalla , candidata, diccionario, palabras_acertadas) > 0):
+                                sonido_correcto.play()
+                            else:
+                                sonido_error.play()
+                            #Verificamos si la palabra candidata es valida, si es valida la guardamos en la lista de palabras_acertadas   
+                            if (es_valida(letra_principal, letras_en_pantalla, candidata , diccionario, palabras_acertadas) == True):
+                                palabras_acertadas.append(candidata)        
+                            candidata = ""
+            
+            
+            
+            
             
             #Dibujar de nuevo todo
             dibujar(screen, letra_principal, letras_en_pantalla, candidata, puntos, segundos, palabras_acertadas,seleccion_dificultad)
