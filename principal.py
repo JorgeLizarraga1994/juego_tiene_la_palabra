@@ -83,6 +83,9 @@ def main():
         
         
         while segundos > fps/1000:
+            # 1 frame cada 1/fps segundos
+            gameClock.tick(fps)
+            totaltime += gameClock.get_time()
             if seleccion_dificultad == False:
                 pintar_botones(screen,facil,"Facil")
                 pintar_botones(screen,medio,"Medio")
@@ -98,20 +101,18 @@ def main():
                         seleccion_dificultad = True
                     if medio.collidepoint(pygame.mouse.get_pos()):
                         imagen_fondo = imagen2
-                        TIEMPO_MAX = 40
+                        TIEMPO_MAX = 50
                         seleccion_dificultad = True
                     if dificil.collidepoint(pygame.mouse.get_pos()):
                         imagen_fondo = huawei
-                        TIEMPO_MAX = 20
+                        TIEMPO_MAX = 40
                         seleccion_dificultad = True
                 #QUIT es apretar la X en la ventana
                 if e.type == QUIT:
                     pygame.quit()
                     return()
                 if seleccion_dificultad == True:
-                    # 1 frame cada 1/fps segundos
-                    gameClock.tick(fps)
-                    totaltime += gameClock.get_time()
+                    
                     screen.blit(imagen_fondo,[0,0])
                     segundos = TIEMPO_MAX - pygame.time.get_ticks()/1000
                     #Ver si fue apretada alguna tecla
@@ -135,7 +136,7 @@ def main():
             
             
             
-            
+            segundos = TIEMPO_MAX - pygame.time.get_ticks()/1000
             
             #Dibujar de nuevo todo
             dibujar(screen, letra_principal, letras_en_pantalla, candidata, puntos, segundos, palabras_acertadas,seleccion_dificultad)
