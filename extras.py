@@ -83,6 +83,10 @@ def dibujar(screen, letra_principal, letras_en_pantalla, candidata, puntos, segu
     """Recorremos la lista de palabras_acertadas una por una y la vamos mostrando en
     pantalla mientras que vamos moviendo la posición para que queden enlistadas
     una debajo de la otra"""
+    if seleccion_dificultad == False:
+        ren0 = defaultFont.render("seleccione dificultad: " , 1 , COLOR_TEXTO)
+        screen.blit(ren0,(500,100))
+                    
     if seleccion_dificultad == True: 
         for i in palabras_acertadas:
             ren5 = defaultFont.render(i, 1, COLOR_TEXTO)
