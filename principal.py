@@ -8,8 +8,12 @@ from configuracion import *
 from funcionesVACIAS import *
 from extras import *
 
+
 #Funcion principal
 def main():
+    
+        TIEMPO_MAX = 60
+        seleccion_dificultad = False
         # Establecer la codificación en UTF-8
         sys.stdout.reconfigure(encoding='utf-8')
         #Centrar la ventana y despues inicializar pygame
@@ -18,7 +22,7 @@ def main():
         pygame.mixer.init()
 
         #fondo
-        imagen = pygame.image.load("assets/imagenes/espacio.jpg")
+        imagen_fondo = pygame.image.load("assets/imagenes/espacio.jpg")
         futuro=pygame.image.load("assets/imagenes/futuro.jpg")
         huawei=pygame.image.load("assets/imagenes/huawei.jpg")
         imagen2=pygame.image.load("assets/imagenes/fondo.jpg")
@@ -46,9 +50,9 @@ def main():
         palabras_acertadas = []
         
         
-        facil= Rect(1000,100,150,50) #hace rectangulo 1000 es el eje x 100 el eje y
-        medio= Rect(1000,200,150,50)
-        dificil= Rect(1000,300,150,50)
+        facil= Rect(600,200,150,50) #hace rectangulo 1000 es el eje x 100 el eje y
+        medio= Rect(600,300,150,50)
+        dificil= Rect(600,400,150,50)
         #Crear botones
         def pintar_botones(screen,boton,palabra):
                 if boton.collidepoint(pygame.mouse.get_pos()):
@@ -75,24 +79,43 @@ def main():
 
         print(dame_algunas_correctas(letra_principal, letras_en_pantalla, diccionario, palabras_acertadas))
         #dibuja la pantalla la primera vez
-        dibujar(screen, letra_principal, letras_en_pantalla, candidata, puntos, segundos, palabras_acertadas)
+        dibujar(screen, letra_principal, letras_en_pantalla, candidata, puntos, segundos, palabras_acertadas, seleccion_dificultad)
         
+        
+
         while segundos > fps/1000:
-        # 1 frame cada 1/fps segundos
-            gameClock.tick(fps)
-            totaltime += gameClock.get_time()
+        
 
             if True:
-                fps = 3
-
+                fps = 3000
+            pintar_botones(screen,facil,"Facil")
+            pintar_botones(screen,medio,"Medio")
+            pintar_botones(screen,dificil,"Dificil")
             #Buscar la tecla apretada del modulo de eventos de pygame
             for e in pygame.event.get():
-
+                if e.type == MOUSEBUTTONDOWN and e.button==1:
+                    if facil.collidepoint(pygame.mouse.get_pos()):
+                        imagen_fondo = futuro
+                        TIEMPO_MAX = 60
+                        seleccion_dificultad = True
+                    if medio.collidepoint(pygame.mouse.get_pos()):
+                        imagen_fondo = imagen2
+                        TIEMPO_MAX = 40
+                        seleccion_dificultad = True
+                    if dificil.collidepoint(pygame.mouse.get_pos()):
+                        imagen_fondo = huawei
+                        TIEMPO_MAX = 20
+                        seleccion_dificultad = True
                 #QUIT es apretar la X en la ventana
                 if e.type == QUIT:
                     pygame.quit()
                     return()
-    
+            if seleccion_dificultad == True:
+                # 1 frame cada 1/fps segundos
+                gameClock.tick(fps)
+                totaltime += gameClock.get_time()
+                screen.blit(imagen_fondo,[0,0])
+                segundos = TIEMPO_MAX - pygame.time.get_ticks()/1000
                 #Ver si fue apretada alguna tecla
                 if e.type == KEYDOWN:
                     letra = dame_letra_apretada(e.key)
@@ -112,26 +135,15 @@ def main():
                             palabras_acertadas.append(candidata)        
                         candidata = ""
             
-            segundos = TIEMPO_MAX - pygame.time.get_ticks()/1000
             
             
-            pintar_botones(screen,facil,"Facil")
-            pintar_botones(screen,medio,"Medio")
-            pintar_botones(screen,dificil,"Dificil")
+            
+            
             #Dibujar de nuevo todo
-            dibujar(screen, letra_principal, letras_en_pantalla, candidata, puntos, segundos, palabras_acertadas)
+            dibujar(screen, letra_principal, letras_en_pantalla, candidata, puntos, segundos, palabras_acertadas,seleccion_dificultad)
 
             pygame.display.flip()
-            screen.blit(imagen2,[0,0])
-            if e.type == MOUSEBUTTONDOWN and e.button==1:
-                    if facil.collidepoint(pygame.mouse.get_pos()):
-                        screen.blit(imagen,[0,0])
-                        TIEMPO_MAX/2
-                    if medio.collidepoint(pygame.mouse.get_pos()):
-                        screen.blit(futuro,[0,0])
-                        
-                    if dificil.collidepoint(pygame.mouse.get_pos()):
-                        screen.blit(huawei,[0,0])
+            screen.blit(imagen_fondo,[0,0])
         while 1:
             #Esperar el QUIT del usuario
             for e in pygame.event.get():
