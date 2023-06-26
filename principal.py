@@ -12,8 +12,7 @@ from extras import *
 #Funcion principal
 def main():
     
-        TIEMPO_MAX = 60
-        seleccion_dificultad = False
+        
         # Establecer la codificación en UTF-8
         sys.stdout.reconfigure(encoding='utf-8')
         #Centrar la ventana y despues inicializar pygame
@@ -47,9 +46,11 @@ def main():
         #tiempo total del juego
         gameClock = pygame.time.Clock()
         totaltime = 0
+        TIEMPO_MAX = 100
         segundos = TIEMPO_MAX
         fps = FPS_inicial
-
+        
+        seleccion_dificultad = False
         puntos = 0
         candidata = ""
         diccionario = []
@@ -70,8 +71,6 @@ def main():
                 screen.blit(texto, (boton.x+(boton.width-texto.get_width())/2,  #width establece el ancho de un elemento que en este caso es el texto
                 boton.y+(boton.height-texto.get_height())/2)) #, get_width obtiene los pixeles de boton en eje x, get_height en y
             
-
-        
         #lee el diccionario
         lectura(diccionario)
 
@@ -88,11 +87,9 @@ def main():
         #dibuja la pantalla la primera vez
         dibujar(screen, letra_principal, letras_en_pantalla, candidata, puntos, segundos, palabras_acertadas, seleccion_dificultad)
         
-        
+
         while segundos > fps/1000:
-            # 1 frame cada 1/fps segundos
-            gameClock.tick(fps)
-            totaltime += gameClock.get_time()
+            
             if seleccion_dificultad == False:
                 pintar_botones(screen,facil,"Facil")
                 pintar_botones(screen,medio,"Medio")
@@ -103,37 +100,37 @@ def main():
             #Buscar la tecla apretada del modulo de eventos de pygame
             for e in pygame.event.get():
                 if e.type == MOUSEBUTTONDOWN and e.button==1:
-
                     if facil.collidepoint(pygame.mouse.get_pos()):
                         pygame.mixer.stop()
                         imagen_fondo = Verano
                         The_Entertainer.play()
-                        TIEMPO_MAX = 60
+                        TIEMPO_MAX = 60 + pygame.time.get_ticks() / 1000
                         seleccion_dificultad = True
                     if medio.collidepoint(pygame.mouse.get_pos()):
                         pygame.mixer.stop()
                         imagen_fondo = Cuadrado
                         Magic.play()
-                        TIEMPO_MAX = 50
+                        TIEMPO_MAX = 50 + pygame.time.get_ticks() / 1000
                         seleccion_dificultad = True
                     if dificil.collidepoint(pygame.mouse.get_pos()):
                         pygame.mixer.stop()
                         imagen_fondo = Galaxia
                         Infierno.play()
-                        TIEMPO_MAX = 40
+                        TIEMPO_MAX = 40 + pygame.time.get_ticks() / 1000
                         seleccion_dificultad = True
                     if reset.collidepoint(pygame.mouse.get_pos()):
-                        main()    
-                    
+                        pygame.mixer.stop() 
+                        main()   
                         
-
                 #QUIT es apretar la X en la ventana
                 if e.type == QUIT:
                     pygame.quit()
                     return()
                 if seleccion_dificultad == True:
+                    
+                    # 1 frame cada 1/fps segundos
                     screen.blit(imagen_fondo,[0,0])
-                    segundos = TIEMPO_MAX - pygame.time.get_ticks()/1000
+                    
                     #Ver si fue apretada alguna tecla
                     if e.type == KEYDOWN:
                         letra = dame_letra_apretada(e.key)
@@ -152,13 +149,10 @@ def main():
                             if (es_valida(letra_principal, letras_en_pantalla, candidata , diccionario, palabras_acertadas) == True):
                                 palabras_acertadas.append(candidata)        
                             candidata = ""
-                
-            if seleccion_dificultad == True:    
-                pintar_botones(screen,reset,"Volver")
-                TIEMPO_MAX = 60
-                
-                
-            segundos = TIEMPO_MAX - pygame.time.get_ticks()/1000
+            if seleccion_dificultad == True:
+                pintar_botones(screen, reset, "volver")
+            segundos = TIEMPO_MAX - pygame.time.get_ticks() / 1000
+            
             
             #Dibujar de nuevo todo
             dibujar(screen, letra_principal, letras_en_pantalla, candidata, puntos, segundos, palabras_acertadas,seleccion_dificultad)
