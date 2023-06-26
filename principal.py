@@ -3,7 +3,7 @@ import os, random, sys, math
 
 import pygame
 from pygame.locals import *
-
+import time
 from configuracion import *
 from funcionesVACIAS import *
 from extras import *
@@ -11,8 +11,8 @@ from extras import *
 
 #Funcion principal
 def main():
-    
-        
+
+
         # Establecer la codificación en UTF-8
         sys.stdout.reconfigure(encoding='utf-8')
         #Centrar la ventana y despues inicializar pygame
@@ -26,7 +26,7 @@ def main():
         Verano=pygame.image.load("assets/imagenes/Verano.jpg")
         Galaxia=pygame.image.load("assets/imagenes/Galaxia.jpg")
         Cuadrado=pygame.image.load("assets/imagenes/Cuadrado.jpg")
-        
+
         #sonidos
         sonido_correcto = pygame.mixer.Sound("assets/sonidos/correct-ding.mp3")
         sonido_error = pygame.mixer.Sound("assets/sonidos/Error.mp3")
@@ -37,40 +37,40 @@ def main():
         Magic=pygame.mixer.Sound("assets/sonidos/Magic.mp3")
 
         Heroic_Age.play()
-        
+
         #Preparar la ventana
         pygame.display.set_caption("Armar palabras con...")
         screen = pygame.display.set_mode((ANCHO, ALTO))
         myfont= pygame.font.SysFont("Calibri",50)
-        
+
         #tiempo total del juego
         gameClock = pygame.time.Clock()
-        totaltime = 0
+        totaltime = -10
         TIEMPO_MAX = 100
         segundos = TIEMPO_MAX
         fps = FPS_inicial
-        
+
         seleccion_dificultad = False
         puntos = 0
         candidata = ""
         diccionario = []
         palabras_acertadas = []
-        
-        
+
+
         facil= Rect(600,200,150,50) #hace rectangulo 1000 es el eje x 100 el eje y
         medio= Rect(600,300,150,50)
         dificil= Rect(600,400,150,50)
         reset= Rect (600,500,150,50)
         #Crear botones
         def pintar_botones(screen,boton,palabra):
-                if boton.collidepoint(pygame.mouse.get_pos()):
-                    pygame.draw.rect(screen,(235,232,52),boton,0)
-                else:
-                    pygame.draw.rect(screen,(5,227,23),boton,0)
-                texto=myfont.render(palabra, True, (255,255,255)) #el nombre de lo que voy a poner
-                screen.blit(texto, (boton.x+(boton.width-texto.get_width())/2,  #width establece el ancho de un elemento que en este caso es el texto
-                boton.y+(boton.height-texto.get_height())/2)) #, get_width obtiene los pixeles de boton en eje x, get_height en y
-            
+            if boton.collidepoint(pygame.mouse.get_pos()):
+                pygame.draw.rect(screen,(235,232,52),boton,0)
+            else:
+                pygame.draw.rect(screen,(5,227,23),boton,0)
+            texto=myfont.render(palabra, True, (255,255,255)) #el nombre de lo que voy a poner
+            screen.blit(texto, (boton.x+(boton.width-texto.get_width())/2,  #width establece el ancho de un elemento que en este caso es el texto
+            boton.y+(boton.height-texto.get_height())/2)) #, get_width obtiene los pixeles de boton en eje x, get_height en y
+
         #lee el diccionario
         lectura(diccionario)
 
@@ -86,15 +86,14 @@ def main():
         print(dame_algunas_correctas(letra_principal, letras_en_pantalla, diccionario, palabras_acertadas))
         #dibuja la pantalla la primera vez
         dibujar(screen, letra_principal, letras_en_pantalla, candidata, puntos, segundos, palabras_acertadas, seleccion_dificultad)
-        
 
         while segundos > fps/1000:
-            
+
             if seleccion_dificultad == False:
                 pintar_botones(screen,facil,"Facil")
                 pintar_botones(screen,medio,"Medio")
                 pintar_botones(screen,dificil,"Dificil")
-                
+
             if True:
                 fps = 30
             #Buscar la tecla apretada del modulo de eventos de pygame
@@ -119,12 +118,13 @@ def main():
                         TIEMPO_MAX = 40 + pygame.time.get_ticks() / 1000
                         seleccion_dificultad = True
                     if reset.collidepoint(pygame.mouse.get_pos()):
-                        pygame.mixer.stop() 
-                        main()   
-                        
+                        pygame.mixer.stop()
+                        main()
+
                 #QUIT es apretar la X en la ventana
                 if e.type == QUIT:
                     pygame.quit()
+                    exit()
                     return()
                 if seleccion_dificultad == True:
                     #Ver si fue apretada alguna tecla
@@ -135,24 +135,26 @@ def main():
                             candidata = candidata[0:len(candidata)-1] #borra la ultima
                         if e.key == K_RETURN:  #presionó enter
                             puntos += procesar(letra_principal, letras_en_pantalla, candidata, diccionario , palabras_acertadas)
-                            
+
                             #Verificamos el numero que retorna la función procesar y dependiendo de eso emitimos un sonido
                             if (procesar(letra_principal, letras_en_pantalla , candidata, diccionario, palabras_acertadas) > 0):
                                 sonido_correcto.play()
                             else:
                                 sonido_error.play()
-                            #Verificamos si la palabra candidata es valida, si es valida la guardamos en la lista de palabras_acertadas   
+                            #Verificamos si la palabra candidata es valida, si es valida la guardamos en la lista de palabras_acertadas
                             if (es_valida(letra_principal, letras_en_pantalla, candidata , diccionario, palabras_acertadas) == True):
-                                palabras_acertadas.append(candidata)        
+                                palabras_acertadas.append(candidata)
                             candidata = ""
             if seleccion_dificultad == True:
                 pintar_botones(screen, reset, "volver")
             segundos = TIEMPO_MAX - pygame.time.get_ticks() / 1000
-            
+            if segundos < 0.5:
+                pygame.mixer.stop()
+                time.sleep(10)
+                main()
             
             #Dibujar de nuevo todo
             dibujar(screen, letra_principal, letras_en_pantalla, candidata, puntos, segundos, palabras_acertadas,seleccion_dificultad)
-            
             pygame.display.flip()
             screen.blit(imagen_fondo,[0,0])
         while 1:
@@ -161,8 +163,6 @@ def main():
                 if e.type == QUIT:
                     pygame.quit()
                     return
-                
-        
 
 #Programa Principal ejecuta Main
 if __name__ == "__main__":
