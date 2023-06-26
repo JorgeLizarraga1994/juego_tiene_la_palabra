@@ -127,10 +127,6 @@ def main():
                     pygame.quit()
                     return()
                 if seleccion_dificultad == True:
-                    
-                    # 1 frame cada 1/fps segundos
-                    screen.blit(imagen_fondo,[0,0])
-                    
                     #Ver si fue apretada alguna tecla
                     if e.type == KEYDOWN:
                         letra = dame_letra_apretada(e.key)
