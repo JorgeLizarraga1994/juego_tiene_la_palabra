@@ -1,6 +1,5 @@
 #! /usr/bin/env python
 import os, random, sys, math
-
 import pygame
 from pygame.locals import *
 import time
@@ -11,8 +10,6 @@ from extras import *
 
 #Funcion principal
 def main():
-
-
         # Establecer la codificación en UTF-8
         sys.stdout.reconfigure(encoding='utf-8')
         #Centrar la ventana y despues inicializar pygame
@@ -35,7 +32,6 @@ def main():
         Infierno = pygame.mixer.Sound("assets/sonidos/Infierno.mp3")
         The_Entertainer=pygame.mixer.Sound("assets/sonidos/The_Entertainer.mp3")
         Magic=pygame.mixer.Sound("assets/sonidos/Magic.mp3")
-
         Heroic_Age.play()
 
         #Preparar la ventana
@@ -45,7 +41,7 @@ def main():
 
         #tiempo total del juego
         gameClock = pygame.time.Clock()
-        totaltime = -10
+        totaltime = 0
         TIEMPO_MAX = 100
         segundos = TIEMPO_MAX
         fps = FPS_inicial
@@ -56,8 +52,8 @@ def main():
         diccionario = []
         palabras_acertadas = []
 
-
-        facil= Rect(600,200,150,50) #hace rectangulo 1000 es el eje x 100 el eje y
+        #Configuración de pantalla de los botones de dificultad y reset
+        facil= Rect(600,200,150,50) 
         medio= Rect(600,300,150,50)
         dificil= Rect(600,400,150,50)
         reset= Rect (600,500,150,50)
@@ -135,7 +131,6 @@ def main():
                             candidata = candidata[0:len(candidata)-1] #borra la ultima
                         if e.key == K_RETURN:  #presionó enter
                             puntos += procesar(letra_principal, letras_en_pantalla, candidata, diccionario , palabras_acertadas)
-
                             #Verificamos el numero que retorna la función procesar y dependiendo de eso emitimos un sonido
                             if (procesar(letra_principal, letras_en_pantalla , candidata, diccionario, palabras_acertadas) > 0):
                                 sonido_correcto.play()
@@ -145,12 +140,15 @@ def main():
                             if (es_valida(letra_principal, letras_en_pantalla, candidata , diccionario, palabras_acertadas) == True):
                                 palabras_acertadas.append(candidata)
                             candidata = ""
+            #Pintamos el boton si esta estamos dentro del juego                
             if seleccion_dificultad == True:
                 pintar_botones(screen, reset, "volver")
             segundos = TIEMPO_MAX - pygame.time.get_ticks() / 1000
+            #verificamos que el tiempo sea menor a 0.5, frenamos la musica, congelamos la pantalla durante 10 segundos y reiniciamos el juego
             if segundos < 0.5:
                 pygame.mixer.stop()
                 time.sleep(10)
+                pygame.quit()
                 main()
             
             #Dibujar de nuevo todo

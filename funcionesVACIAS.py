@@ -119,7 +119,7 @@ def es_valida(letra_principal, letras_en_pantalla, candidata, diccionario , pala
     return True    
         
 
-#devuelve los puntos
+#Devuelve los puntos
 def Puntos(candidata):
     if len(candidata) < 3:
         return 0

@@ -67,7 +67,7 @@ def dame_letra_apretada(key):
         return("")
 
 def dibujar(screen, letra_principal, letras_en_pantalla, candidata, puntos, segundos , palabras_acertadas, seleccion_dificultad):
-    
+    #Configuración de las fuentes
     defaultFont= pygame.font.Font( pygame.font.get_default_font(), 30)
     defaultFont2= pygame.font.Font( pygame.font.get_default_font(), 20)
     defaultFontGrande= pygame.font.Font( pygame.font.get_default_font(), 80)
@@ -81,30 +81,25 @@ def dibujar(screen, letra_principal, letras_en_pantalla, candidata, puntos, segu
     ren1 = defaultFont.render(candidata, 1, COLOR_TEXTO)
     ren2 = defaultFont.render("Puntos: " + str(puntos), 1, COLOR_TEXTO)
     ren4 = defaultFont2.render("palabras acertadas: ", 1, COLOR_TEXTO)
-    """Recorremos la lista de palabras_acertadas una por una y la vamos mostrando en
-    pantalla mientras que vamos moviendo la posición para que queden enlistadas
-    una debajo de la otra"""
     if seleccion_dificultad == False:
         ren0 = defaultFont.render("seleccione dificultad: " , 1 , COLOR_TEXTO)
         screen.blit(ren0,(500,100))
-                    
+
+    """Recorremos la lista de palabras_acertadas una por una y la vamos mostrando en
+    pantalla mientras que vamos moviendo la posición para que queden enlistadas
+    una debajo de la otra"""
     if seleccion_dificultad == True: 
         for i in palabras_acertadas:
             ren5 = defaultFont2.render(i, 1, COLOR_TEXTO)
+            palabras_acertadas.sort()
             screen.blit(ren5 , (pos_x_acertadas,pos_y_acertadas))
             pos_y_acertadas += 20
-                
+
         if(segundos<15):
             ren3 = defaultFont.render("Tiempo: " + str(int(segundos)), 1, COLOR_TIEMPO_FINAL)
         else:
             ren3 = defaultFont.render("Tiempo: " + str(int(segundos)), 1, COLOR_TEXTO)
-        """ Verificamos que el tiempo sea menor a 1, y mediante la función
-        .sort , ordenaremos alfabeticamente las palabras acertadas y las mostraremos en pantalla"""    
-    
-        palabras_acertadas.sort()
-        for e in  palabras_acertadas:
-            ren5 = defaultFont2.render(e, 1, COLOR_TEXTO)
-                
+        
         #escribe grande la palabra (letra por letra) y la letra principal de otro color
         pos = 380 #posición en x de las letras
         for i in range(len(letras_en_pantalla)):
